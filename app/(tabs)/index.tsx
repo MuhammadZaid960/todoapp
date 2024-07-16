@@ -67,7 +67,7 @@ const initialUserData: Iuser[] = [
 
 export default function HomeScreen() {
   const [activeIndex, setActiveIndex] = useState<number>(0);
-  const [currentId, setCurrentId] = useState<number>(6);
+  const [currentId, setCurrentId] = useState<number>(7);
   const [userName, setUserName] = useState("");
   const [userTask, setUserTask] = useState("");
   const [users, setUsers] = useState<Iuser[]>(initialUserData);
@@ -194,16 +194,22 @@ export default function HomeScreen() {
         <ThemedText type="subtitle">
           {dataNames} Todos({dataToshow.length})
         </ThemedText>
-        <ThemedView style={styles.container}>
-          {dataToshow.map((props, i) => (
-            <Card
-              key={i}
-              {...props}
-              handleDelete={handleDeleteTodo}
-              handleStatus={handleChangeStatus}
-            />
-          ))}
-        </ThemedView>
+        {dataToshow.length === 0 ? (
+          <ThemedText Color="#4C30FF" type="defaultSemiBold">
+            No Data fount in {dataNames} Todos
+          </ThemedText>
+        ) : (
+          <ThemedView style={styles.container}>
+            {dataToshow.map((props, i) => (
+              <Card
+                key={i}
+                {...props}
+                handleDelete={handleDeleteTodo}
+                handleStatus={handleChangeStatus}
+              />
+            ))}
+          </ThemedView>
+        )}
       </ParallaxScrollView>
     </>
   );
@@ -214,6 +220,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
+    paddingTop: 20,
   },
   stepContainer: {
     gap: 8,
